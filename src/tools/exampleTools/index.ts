@@ -2,7 +2,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { createToolSuccessResponse } from "../../utils/response-formatter.js";
 
 async function apiCallToolHandler(_args: {}, _extra: any) {
-  // Prepare response data
+  console.log({ _args, _extra })
   const responseData = {
     foo: "bar",
   };
@@ -37,7 +37,7 @@ const registerTools = (server: McpServer) => {
     ],
   }));
   // register resources.
-  // server.resource("schemas", "db://schemas", () => {});
+  // server.resource("schemas", "db://schemas", () => { });
 };
 
 export default registerTools;

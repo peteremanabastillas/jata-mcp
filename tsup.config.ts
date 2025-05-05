@@ -7,7 +7,7 @@ export default defineConfig({
   bundle: false,
   sourcemap: true,
 
-  entry: ["src/index.ts"],
+  entry: ["src/**/*.ts", "src/**/*.json"],
   outDir: "dist",
 
   splitting: false, // No code splitting
@@ -17,21 +17,14 @@ export default defineConfig({
   minify: false,
 
   async onSuccess() {
-    // Create target directory
-    const targetDir = path.join("dist", "resources", "employee-sqlite");
-    fs.mkdirSync(targetDir, { recursive: true });
 
-    // Copy all SQL files from resources/employee-sqlite to dist/resources/employee-sqlite
-    const sourceDir = path.join("resources", "employee-sqlite");
-    const files = fs.readdirSync(sourceDir);
 
-    for (const file of files) {
-      if (file.endsWith(".sql")) {
-        const sourcePath = path.join(sourceDir, file);
-        const targetPath = path.join(targetDir, file);
-        fs.copyFileSync(sourcePath, targetPath);
-        console.log(`Copied ${sourcePath} to ${targetPath}`);
-      }
+    // Copy .env file to dist directory
+    const envFilePath = path.join(".env");
+    const envTargetPath = path.join("dist", ".env");
+    if (fs.existsSync(envFilePath)) {
+      fs.copyFileSync(envFilePath, envTargetPath);
+      console.log(`Copied ${envFilePath} to ${envTargetPath}`);
     }
   },
 });
